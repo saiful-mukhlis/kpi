@@ -22,8 +22,10 @@
  * @property integer $golonganid
  * @property string $nilai_terakhir
  * @property integer $total_nilai
+ * @property integer $usrid
  *
  * The followings are the available model relations:
+ * @property Usr $usr
  * @property Devisi $devisi
  * @property Golongan $golongan
  * @property Nilai2Karyawan[] $nilai2Karyawans
@@ -62,8 +64,8 @@ class Karyawan extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('nama, devisiid, departemenid,', 'required'),
-			array('status_karyawan, devisiid, departemenid, golonganid, total_nilai', 'numerical', 'integerOnly'=>true),
+			array('nama', 'required'),
+			array('status_karyawan, devisiid, departemenid, golonganid, total_nilai, usrid', 'numerical', 'integerOnly'=>true),
 			array('nama, no_identitas, tempat_lahir, kota, jabatan', 'length', 'max'=>100),
 			array('jenis_identitas', 'length', 'max'=>20),
 			array('alamat, nilai_terakhir', 'length', 'max'=>255),
@@ -71,7 +73,7 @@ class Karyawan extends CActiveRecord
 			array('tanggal_lahir, tanggal_masuk', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, nama, jenis_identitas, no_identitas, tempat_lahir, tanggal_lahir, alamat, kota, no_telp, no_hp, tanggal_masuk, status_karyawan, devisiid, departemenid, jabatan, golonganid, nilai_terakhir, total_nilai', 'safe', 'on'=>'search'),
+			array('id, nama, jenis_identitas, no_identitas, tempat_lahir, tanggal_lahir, alamat, kota, no_telp, no_hp, tanggal_masuk, status_karyawan, devisiid, departemenid, jabatan, golonganid, nilai_terakhir, total_nilai, usrid', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -83,6 +85,7 @@ class Karyawan extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'usr' => array(self::BELONGS_TO, 'Usr', 'usrid'),
 			'devisi' => array(self::BELONGS_TO, 'Devisi', 'devisiid'),
 			'golongan' => array(self::BELONGS_TO, 'Golongan', 'golonganid'),
 			'nilai2Karyawans' => array(self::HAS_MANY, 'Nilai2Karyawan', 'karyawanid'),
@@ -113,12 +116,13 @@ class Karyawan extends CActiveRecord
 			'no_hp' => 'No Hp',
 			'tanggal_masuk' => 'Tanggal Masuk',
 			'status_karyawan' => 'Status Karyawan',
-			'devisiid' => 'Devisi',
-			'departemenid' => 'Departement',
+			'devisiid' => 'Devisiid',
+			'departemenid' => 'Departemenid',
 			'jabatan' => 'Jabatan',
-			'golonganid' => 'Golongan',
+			'golonganid' => 'Golonganid',
 			'nilai_terakhir' => 'Nilai Terakhir',
 			'total_nilai' => 'Total Nilai',
+			'usrid' => 'Usrid',
 		);
 	}
 
@@ -151,6 +155,7 @@ class Karyawan extends CActiveRecord
 		$criteria->compare('golonganid',$this->golonganid);
 		$criteria->compare('nilai_terakhir',$this->nilai_terakhir,true);
 		$criteria->compare('total_nilai',$this->total_nilai);
+		$criteria->compare('usrid',$this->usrid);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

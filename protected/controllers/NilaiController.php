@@ -127,15 +127,27 @@ class NilaiController extends Controller
 	 */
 	public function actionIndex()
 	{
+		$periode=new PeriodeForm();
+		
+		if(isset($_POST['PeriodeForm']))
+		{
+			$periode->attributes=$_POST['PeriodeForm'];
+		}
+		
+		if ($periode->periodeid===null) {
+			$p=Periode::model()->find(array('order'=>'id DESC'));
+			$periode->periodeid=$p->id;
+		}
+		
 		$d=Yii::app()->user->getState('devisiid');
 		if ($d==null || $d==='-') {
-			$models=Nilai::model()->findAll();
+			$models=Nilai::model()->findAllByAttributes(array('periodeid'=>$periode->periodeid));
 		}else{
-			$models=Nilai::model()->findAllByAttributes(array('devisiid'=>$d));
+			$models=Nilai::model()->findAllByAttributes(array('devisiid'=>$d, 'periodeid'=>$periode->periodeid));
 		}
 		
 		$this->render('index',array(
-			'models'=>$models,
+			'models'=>$models,'periode'=>$periode
 		));
 	}
 

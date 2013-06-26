@@ -5,6 +5,7 @@
  *
  * The followings are the available columns in table 'nilai2_karyawan_up':
  * @property integer $id
+ * @property integer $periodeid
  * @property integer $karyawanid
  * @property integer $upid
  * @property integer $n1
@@ -14,6 +15,7 @@
  * @property integer $n5
  *
  * The followings are the available model relations:
+ * @property Periode $periode
  * @property Karyawan $karyawan
  * @property Karyawan $up
  */
@@ -45,11 +47,11 @@ class Nilai2KaryawanUp extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('karyawanid', 'required'),
-			array('karyawanid, upid, n1, n2, n3, n4, n5', 'numerical', 'integerOnly'=>true),
+			array('periodeid, karyawanid', 'required'),
+			array('periodeid, karyawanid, upid, n1, n2, n3, n4, n5', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, karyawanid, upid, n1, n2, n3, n4, n5', 'safe', 'on'=>'search'),
+			array('id, periodeid, karyawanid, upid, n1, n2, n3, n4, n5', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -61,6 +63,7 @@ class Nilai2KaryawanUp extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'periode' => array(self::BELONGS_TO, 'Periode', 'periodeid'),
 			'karyawan' => array(self::BELONGS_TO, 'Karyawan', 'karyawanid'),
 			'up' => array(self::BELONGS_TO, 'Karyawan', 'upid'),
 		);
@@ -73,6 +76,7 @@ class Nilai2KaryawanUp extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
+			'periodeid' => 'Periodeid',
 			'karyawanid' => 'Karyawanid',
 			'upid' => 'Upid',
 			'n1' => 'N1',
@@ -95,6 +99,7 @@ class Nilai2KaryawanUp extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
+		$criteria->compare('periodeid',$this->periodeid);
 		$criteria->compare('karyawanid',$this->karyawanid);
 		$criteria->compare('upid',$this->upid);
 		$criteria->compare('n1',$this->n1);

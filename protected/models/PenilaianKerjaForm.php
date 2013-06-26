@@ -3,7 +3,8 @@
 class PenilaianKerjaForm extends CFormModel
 {
 	public $realisasi;
-	public $skor;
+	public $nilai_tugasid;
+	public $periodeid;
 
 	/**
 	 * Declares the validation rules.
@@ -11,8 +12,8 @@ class PenilaianKerjaForm extends CFormModel
 	public function rules()
 	{
 		return array(
-			array('realisasi, skor', 'required'),
-				array('realisasi, skor', 'numerical', 'integerOnly'=>true),
+			array('realisasi, nilai_tugasid', 'required'),
+				array('realisasi, nilai_tugasid', 'numerical', 'integerOnly'=>true),
 		);
 	}
 

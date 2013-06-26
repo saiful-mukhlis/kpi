@@ -5,6 +5,7 @@
  *
  * The followings are the available columns in table 'nilai2_karyawan':
  * @property integer $id
+ * @property integer $periodeid
  * @property integer $karyawanid
  * @property integer $n1
  * @property integer $n2
@@ -13,6 +14,7 @@
  * @property integer $n5
  *
  * The followings are the available model relations:
+ * @property Periode $periode
  * @property Karyawan $karyawan
  */
 class Nilai2Karyawan extends CActiveRecord
@@ -43,11 +45,11 @@ class Nilai2Karyawan extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('karyawanid', 'required'),
-			array('karyawanid, n1, n2, n3, n4, n5', 'numerical', 'integerOnly'=>true),
+			array('periodeid, karyawanid', 'required'),
+			array('periodeid, karyawanid, n1, n2, n3, n4, n5', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, karyawanid, n1, n2, n3, n4, n5', 'safe', 'on'=>'search'),
+			array('id, periodeid, karyawanid, n1, n2, n3, n4, n5', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -59,6 +61,7 @@ class Nilai2Karyawan extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'periode' => array(self::BELONGS_TO, 'Periode', 'periodeid'),
 			'karyawan' => array(self::BELONGS_TO, 'Karyawan', 'karyawanid'),
 		);
 	}
@@ -70,6 +73,7 @@ class Nilai2Karyawan extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
+			'periodeid' => 'Periodeid',
 			'karyawanid' => 'Karyawanid',
 			'n1' => 'N1',
 			'n2' => 'N2',
@@ -91,6 +95,7 @@ class Nilai2Karyawan extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
+		$criteria->compare('periodeid',$this->periodeid);
 		$criteria->compare('karyawanid',$this->karyawanid);
 		$criteria->compare('n1',$this->n1);
 		$criteria->compare('n2',$this->n2);
