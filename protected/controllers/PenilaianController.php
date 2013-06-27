@@ -2,22 +2,41 @@
 class PenilaianController extends Controller {
 	
 	public function actionViewCoreDownline2() {
+		$privilege=Yii::app()->user->getState('privilege');
+		if ($privilege!=2) {
+			$this->redirect('site/error');
+		}
 		$periode=$this->buildPeriode();
 		$devisiid=Yii::app()->user->getState('devisiid');
 		$karyawanid=Yii::app()->user->getState('userid');
 		if ($karyawanid==null || $devisiid==null || $karyawanid==='-' || $devisiid ==='-') {
-			//$this->redirect('site/login');
+			$this->redirect('site/login');
 		}
 		$karyawans=Karyawan::model()->with('usr')->findAll(' t.devisiid = '.$devisiid.' AND usr.privilege > 2 ');
 		$this->render ( 'viewCoreDownline2', array( 'devisiid'=>$devisiid,  'periode'=>$periode,  'karyawanid'=>$karyawanid, 'karyawans'=>$karyawans) );
 	}
+	
+	public function actionViewCoreDownline3() {
+		$privilege=Yii::app()->user->getState('privilege');
+		if ($privilege!=3) {
+			$this->redirect('site/error');
+		}
+		$periode=$this->buildPeriode();
+		$devisiid=Yii::app()->user->getState('devisiid');
+		$karyawanid=Yii::app()->user->getState('userid');
+		if ($karyawanid==null || $devisiid==null || $karyawanid==='-' || $devisiid ==='-') {
+			$this->redirect('site/login');
+		}
+		$karyawans=Karyawan::model()->with('usr')->findAll(' t.devisiid = '.$devisiid.' AND usr.privilege > 3 ');
+		$this->render ( 'viewCoreDownline2', array( 'devisiid'=>$devisiid,  'periode'=>$periode,  'karyawanid'=>$karyawanid, 'karyawans'=>$karyawans) );
+	}	
 
 	public function actionViewCore() {
 		$periode=$this->buildPeriode();
 		$devisiid=Yii::app()->user->getState('devisiid');
 		$karyawanid=Yii::app()->user->getState('userid');
 		if ($karyawanid==null || $devisiid==null || $karyawanid==='-' || $devisiid ==='-') {
-			//$this->redirect('site/login');
+			$this->redirect('site/login');
 		}
 		$this->render ( 'viewCore', array( 'devisiid'=>$devisiid,  'periode'=>$periode,  'karyawanid'=>$karyawanid) );
 	}
@@ -26,7 +45,7 @@ class PenilaianController extends Controller {
 		$devisiid=Yii::app()->user->getState('devisiid');
 		$karyawanid=Yii::app()->user->getState('userid');
 		if ($karyawanid==null || $devisiid==null || $karyawanid==='-' || $devisiid ==='-') {
-			//$this->redirect('site/login');
+			$this->redirect('site/login');
 		}
 		
 		$model=new CoreForm();
@@ -110,7 +129,7 @@ class PenilaianController extends Controller {
 		$devisiid=Yii::app()->user->getState('devisiid');
 		$karyawanid=Yii::app()->user->getState('userid');
 		if ($karyawanid==null || $devisiid==null || $karyawanid==='-' || $devisiid ==='-') {
-			//$this->redirect('site/login');
+			$this->redirect('site/login');
 		}
 		
 		$model=new PenilaianKerjaForm();
@@ -208,14 +227,36 @@ class PenilaianController extends Controller {
 	public function actionViewDownline2() {
 		$periode=$this->buildPeriode();
 		
+		$privilege=Yii::app()->user->getState('privilege');
+		if ($privilege!=2) {
+			$this->redirect('site/error');
+		}
 		$devisiid=Yii::app()->user->getState('devisiid');
 		$karyawanid=Yii::app()->user->getState('userid');
 		if ($karyawanid==null || $devisiid==null || $karyawanid==='-' || $devisiid ==='-') {
-			//$this->redirect('site/login');
+			$this->redirect('site/login');
 		}
 		
 		$karyawans=Karyawan::model()->with('usr')->findAll(' t.devisiid = '.$devisiid.' AND usr.privilege > 2 ');
 		//echo count($karyawans);return ;
+		$this->render ( 'viewDownline2', array('karyawans'=>$karyawans, 'periode'=>$periode) );
+	}
+	
+	public function actionViewDownline3() {
+		$periode=$this->buildPeriode();
+	
+		$privilege=Yii::app()->user->getState('privilege');
+		if ($privilege!=3) {
+			$this->redirect('site/error');
+		}
+		$devisiid=Yii::app()->user->getState('devisiid');
+		$karyawanid=Yii::app()->user->getState('userid');
+		if ($karyawanid==null || $devisiid==null || $karyawanid==='-' || $devisiid ==='-') {
+			$this->redirect('site/login');
+		}
+	
+		$karyawans=Karyawan::model()->with('usr')->findAll(' t.devisiid = '.$devisiid.' AND usr.privilege > 3 ');
+		//echo count($karyawans).$devisiid;return ;
 		$this->render ( 'viewDownline2', array('karyawans'=>$karyawans, 'periode'=>$periode) );
 	}
 	
@@ -226,7 +267,7 @@ class PenilaianController extends Controller {
 		$devisiid=Yii::app()->user->getState('devisiid');
 		$karyawanid=Yii::app()->user->getState('userid');
 		if ($karyawanid==null || $devisiid==null || $karyawanid==='-' || $devisiid ==='-') {
-			//$this->redirect('site/login');
+			$this->redirect('site/login');
 		}
 	
 		
@@ -300,7 +341,7 @@ class PenilaianController extends Controller {
 		$devisiid=Yii::app()->user->getState('devisiid');
 		$karyawanid=Yii::app()->user->getState('userid');
 		if ($karyawanid==null || $devisiid==null || $karyawanid==='-' || $devisiid ==='-') {
-			//$this->redirect('site/login');
+			$this->redirect('site/login');
 		}
 		
 		//$nk=NilaiKaryawan::model()->with(array('nilaiTugas'=>array('with'=>array('nilai'=>array('condition'=>'periodeid='.$periode->periodeid)))))->findAllByAttributes(array('karyawanid'=>Yii::app()->user->getState('userid')));

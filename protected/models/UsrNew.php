@@ -41,6 +41,6 @@ class UsrNew extends Usr
 	}
 
 	public function getPrevillage(){
-		return array(1=>'Super User',2=>'Dua',3=>'Tiga',4=>Yii::t('app', 'Officer'));
+		return array(1=>'Super User',2=>Yii::t('app', 'Head'),3=>Yii::t('app', 'D.Head'),4=>Yii::t('app', 'Officer'));
 	}
 }

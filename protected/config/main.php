@@ -10,7 +10,7 @@ return array(
 	'name'=>'Noname',
 	'defaultController' => 'site',
 	'theme' => 'classic',
-		//'language' => 'us',
+	//'language' => 'us',
 	// preloading 'log' component
 	'preload'=>array(
         'log',

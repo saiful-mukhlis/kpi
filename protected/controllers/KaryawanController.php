@@ -80,6 +80,8 @@ class KaryawanController extends Controller
 					$model2->password=md5('1234');
 					$model2->status=1;
 					if ($model2->save()) {
+						$model->usrid=$model2->id;
+						$model->save();
 						$transaction->commit();
 						$this->redirect(array('view','id'=>$model->id));
 					}

@@ -67,8 +67,8 @@ class StdNilai extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'smin' => 'Smin',
-			'smax' => 'Smax',
+			'smin' => 'Skor Min',
+			'smax' => 'Skor Max',
 			'kategori' => 'Kategori',
 			'huruf' => 'Huruf',
 			'kredit' => 'Kredit',

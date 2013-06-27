@@ -18,6 +18,9 @@ class SiteController extends Controller
         );
     }
 	public function actionIndex() {
+		if (Yii::app()->user-> isGuest) {
+			$this->redirect('site/login');
+		}
 		$this->page['title']='Home';
 		$this->page['description']='deskripsi';
 		$this->page['keywords']='keywords';
